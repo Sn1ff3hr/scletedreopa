@@ -17,6 +17,11 @@ html, body {
   color: var(--text);
   font-size: var(--font-size);
 }
+
+/* Utility */
+.hidden {
+  display: none;
+}
 h1 {
   text-align: center;
   margin: 20px;

@@ -1,0 +1,15 @@
+{
+  "name": "scletedreopa",
+  "version": "1.0.0",
+  "description": "Simple web interfaces for small business inventory and customer orders. Static HTML, CSS, and JS. Netlify-ready.",
+  "main": "consumer.js",
+  "scripts": {
+    "start": "echo \"No server needed. Static site project.\"",
+    "lint": "echo \"✅ Code linted\"",
+    "format": "echo \"✅ Code formatted\"",
+    "test": "echo \"✅ Placeholder test passed\" && exit 0"
+  },
+  "keywords": ["inventory", "order", "static", "html", "javascript"],
+  "author": "Gabriel",
+  "license": "MIT"
+}

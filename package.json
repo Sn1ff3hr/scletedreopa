@@ -1,15 +1,22 @@
 {
   "name": "scletedreopa",
   "version": "1.0.0",
-  "description": "Simple web interfaces for small business inventory and customer orders. Static HTML, CSS, and JS. Netlify-ready.",
+  "description": "Simple inventory and order system using HTML, CSS, JS. Linted, formatted, tested, and CI-ready.",
   "main": "consumer.js",
   "scripts": {
-    "start": "echo \"No server needed. Static site project.\"",
-    "lint": "echo \"✅ Code linted\"",
-    "format": "echo \"✅ Code formatted\"",
-    "test": "echo \"✅ Placeholder test passed\" && exit 0"
+    "start": "echo \"Static site - no server\"",
+    "lint": "eslint . --ext .js",
+    "format": "prettier --write .",
+    "test": "jest"
   },
   "keywords": ["inventory", "order", "static", "html", "javascript"],
   "author": "Gabriel",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^8.57.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.2.5"
+  }
 }

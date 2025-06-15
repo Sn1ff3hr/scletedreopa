@@ -1,11 +1,12 @@
 // eslint.config.js
-import js from '@eslint/js';
-import prettier from 'eslint-config-prettier';
+const js = require('@eslint/js');
+const prettier = require('eslint-config-prettier');
 
-export default [
+module.exports = [
   js.configs.recommended,
   {
     files: ['**/*.js'],
+    ignores: ['node_modules', 'dist', 'build'],
     rules: {
       'no-unused-vars': 'warn',
       'no-console': 'off'

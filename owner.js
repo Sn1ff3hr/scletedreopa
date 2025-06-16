@@ -7,12 +7,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const q = toFloat(document.getElementById('quantity').value);
     const f = toFloat(document.getElementById('futureSelling').value);
 
-    document.getElementById('totalPaid').value = (s * (1 + v) || '').toFixed(2);
-    document.getElementById('unitPrice').value = (q ? s / q : 0 || '').toFixed(2);
-    document.getElementById('futureEarnings').value = (f * q || '').toFixed(2);
+    const totalPaid = s * (1 + v);
+    document.getElementById('totalPaid').value = isFinite(totalPaid) ? totalPaid.toFixed(2) : '0.00';
+
+    const unitPrice = q ? s / q : 0;
+    document.getElementById('unitPrice').value = unitPrice.toFixed(2);
+
+    const futureEarnings = f * q;
+    document.getElementById('futureEarnings').value = isFinite(futureEarnings) ? futureEarnings.toFixed(2) : '0.00';
 
     const up = toFloat(document.getElementById('unitPrice').value);
-    document.getElementById('grossMargin').value = (up ? ((f - up) / up * 100) : 0 || '').toFixed(2);
+    const grossMargin = up ? ((f - up) / up * 100) : 0;
+    document.getElementById('grossMargin').value = isFinite(grossMargin) ? grossMargin.toFixed(2) : '0.00';
   }
 
   ['subtotal', 'vat', 'quantity', 'futureSelling'].forEach(id => {
@@ -27,10 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
     productForm.addEventListener('submit', function(e) {
       e.preventDefault();
       updateCalculatedFields();
+
       const row = document.createElement('tr');
-      row.innerHTML = ['assetId', 'productName', 'quantity', 'subtotal', 'vat', 'totalPaid', 'unitPrice', 'futureSelling', 'futureVat', 'futureEarnings', 'grossMargin']
-        .map(id => `<td>${document.getElementById(id).value || '-'}</td>`)
-        .join('');
+      row.innerHTML = [
+        'assetId', 'productName', 'quantity', 'subtotal', 'vat', 'totalPaid',
+        'unitPrice', 'futureSelling', 'futureVat', 'futureEarnings', 'grossMargin'
+      ].map(id => {
+        const value = document.getElementById(id)?.value;
+        return `<td>${value !== undefined ? value : '-'}</td>`;
+      }).join('');
 
       const tbody = document.querySelector('#inventoryTable tbody');
       if (tbody) {
@@ -38,17 +49,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       this.reset();
-      updateCalculatedFields(); // Recalculate for placeholder values
+      updateCalculatedFields();
 
       const imgPreview = document.getElementById('imgPreview');
       if (imgPreview) {
-        imgPreview.innerHTML = '📷'; // Reset image preview
+        imgPreview.innerHTML = '📷';
       }
     });
   }
 
   const cameraBtn = document.getElementById('cameraBtn');
-  const uploadImgInput = document.getElementById('uploadImg'); // Ensure this input exists in HTML
+  const uploadImgInput = document.getElementById('uploadImg');
 
   if (cameraBtn && uploadImgInput) {
     cameraBtn.addEventListener('click', () => uploadImgInput.click());
@@ -61,10 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.onload = function(e) {
           const imgPreview = document.getElementById('imgPreview');
           if (imgPreview) {
-            imgPreview.innerHTML = ''; // Clear previous content (e.g., the camera icon)
+            imgPreview.innerHTML = '';
             const img = document.createElement('img');
             img.src = e.target.result;
-            // Styling is handled by '.image-preview img' in owner.css
             imgPreview.appendChild(img);
           }
         };
@@ -83,6 +93,5 @@ document.addEventListener('DOMContentLoaded', () => {
     printBtn.addEventListener('click', () => window.print());
   }
 
-  // Initial calculation for empty fields if needed, or for pre-filled forms
   updateCalculatedFields();
 });

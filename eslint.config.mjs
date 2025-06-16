@@ -1,35 +1,27 @@
-const js = require('@eslint/js');
-const prettier = require('eslint-config-prettier');
+// ✅ Correct ESM-based config
+import js from '@eslint/js';
+import prettier from 'eslint-config-prettier';
 
-module.exports = [
-  js.configs.recommended,
+export default [
   {
-    files: ['**/*.js'],
+    ...js.configs.recommended,
+    ignores: ['dist', 'node_modules'],
     languageOptions: {
       globals: {
-        // For browser context
         document: 'readonly',
-        alert: 'readonly',
         window: 'readonly',
-        crypto: 'readonly',
         FileReader: 'readonly',
+        crypto: 'readonly',
         TextEncoder: 'readonly',
         console: 'readonly',
-
-        // For Jest (test files)
-        describe: 'readonly',
-        test: 'readonly',
-        expect: 'readonly',
-        beforeEach: 'readonly'
-      }
+        alert: 'readonly',
+      },
     },
-    ignores: ['node_modules', 'dist', 'build'],
+    plugins: [],
     rules: {
-      'no-unused-vars': 'warn',
-      'no-console': 'off',
-      'no-constant-binary-expression': 'warn'
-    }
+      'no-undef': 'error',
+      'no-constant-binary-expression': 'warn',
+    },
   },
-  prettier
+  prettier,
 ];
-
